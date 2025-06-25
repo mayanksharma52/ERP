@@ -1,6 +1,5 @@
 const nodemailer = require("nodemailer");
-
-const sendOTP = async (email, name, otp) => {
+const verifieduser = async (email, name, role) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -12,11 +11,10 @@ const sendOTP = async (email, name, otp) => {
   const mailOptions = {
     from: process.env.EMAIL,
     to: email,
-    subject: "OTP Verification",
-    text: `Hi ${name}, \n This is your: ${otp}\n\nPlease use this OTP to verify your employee account`,
+    subject: "Verified Done",
+    text: `Congratulations ${name},\nYour account has been successfully verified.Now you are the member of our team as a ${role} \n Thank you for verifying your email!`,
   };
 
   await transporter.sendMail(mailOptions);
 };
-
-module.exports = sendOTP;
+module.exports = verifieduser;
