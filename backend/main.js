@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const authRoutes = require("./routes/auth");
-const dashboardRoutes = require("./routes/dashboard");
+
+const employeeRoute = require("./routes/emplyeeRoute");
 const cors = require("cors");
 
 dotenv.config();
@@ -18,7 +19,7 @@ app.get("/", (req, res) => {
 
 app.use(bodyParser.json());
 app.use("/api/auth", authRoutes);
-app.use("/api/departments", dashboardRoutes);
+app.use("/api/employee",employeeRoute);
 const port = 4001;
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
