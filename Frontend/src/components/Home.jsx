@@ -1,7 +1,11 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+// src/components/Home.jsx
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
+    const navigate = useNavigate();
+
     const [stats, setStats] = useState({
         totalProjects: 0,
         activeUsers: 0,
@@ -18,91 +22,126 @@ function Home() {
         });
     }, []);
 
+    const features = [
+        {
+            title: 'Project Management',
+            description: 'Easily organize and monitor all ongoing projects.',
+            image: '/images/ProjectManagement.jpg'
+        },
+        {
+            title: 'Task Tracking',
+            description: 'Stay on top of your daily deliverables and timelines.',
+            image: '/images/TaskTracking.jpg'
+        },
+        {
+            title: 'Resource Allocation',
+            description: 'Efficiently manage human and technical resources.',
+            image: '/images/ResourceAllocation.jpeg'
+        },
+        {
+            title: 'Reports & Analytics',
+            description: 'Visualize your team’s performance with in-depth insights.',
+            image: '/images/Analytic.png'
+        },
+    ];
+
     return (
-        <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-            {/* Header Section */}
-            <header className="text-center mb-16">
-                <h1 className="text-4xl font-bold text-gray-900 mb-4">Welcome to ProjectERP</h1>
-                <p className="text-xl text-gray-600">Your Complete Enterprise Resource Planning Solution</p>
-            </header>
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white px-4 sm:px-6 lg:px-12 overflow-hidden"
+        >
+            {/* Futuristic Background Effects */}
+            <div className="absolute inset-0 -z-10 animate-pulse bg-[radial-gradient(#1e1e2f_1px,transparent_1px)] [background-size:20px_20px] opacity-10"></div>
+            <div className="absolute inset-0 -z-20 bg-gradient-to-tr from-purple-900/40 via-indigo-900/40 to-black"></div>
 
-            {/* Statistics Dashboard */}
+            {/* Hero Section */}
+            <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.8 }}
+                className="text-center py-24"
+            >
+                <h1 className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-blue-400 drop-shadow-lg">
+                    StratoWorks
+                </h1>
+                <p className="mt-4 text-xl md:text-2xl text-gray-300">
+                    Next-Gen ERP for Modern Enterprises
+                </p>
+                <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => navigate('/login')}
+                    className="mt-8 px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white font-semibold shadow-lg hover:shadow-pink-500/40 transition"
+                >
+                    Get Started 🚀
+                </motion.button>
+            </motion.div>
+
+            {/* Stats */}
             <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-                <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                    <div className="text-blue-500 mb-4">
-                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                        </svg>
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-700 mb-2">Total Projects</h3>
-                    <p className="text-3xl font-bold text-gray-900">{stats.totalProjects}</p>
-                </div>
-
-                <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                    <div className="text-green-500 mb-4">
-                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-700 mb-2">Active Users</h3>
-                    <p className="text-3xl font-bold text-gray-900">{stats.activeUsers}</p>
-                </div>
-
-                <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                    <div className="text-yellow-500 mb-4">
-                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
-                        </svg>
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-700 mb-2">Pending Tasks</h3>
-                    <p className="text-3xl font-bold text-gray-900">{stats.pendingTasks}</p>
-                </div>
-
-                <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                    <div className="text-purple-500 mb-4">
-                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-700 mb-2">Completed Tasks</h3>
-                    <p className="text-3xl font-bold text-gray-900">{stats.completedTasks}</p>
-                </div>
-            </section>
-
-            {/* Features Grid */}
-            <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-                {['Project Management', 'Task Tracking', 'Resource Allocation', 'Reports & Analytics'].map((feature, index) => (
-                    <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                        <div className="h-48 bg-gray-200"></div>
-                        <div className="p-6">
-                            <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature}</h3>
-                            <p className="text-gray-600">Manage and track your resources efficiently with our tools</p>
-                        </div>
-                    </div>
+                {[{ label: 'Total Projects', value: stats.totalProjects },
+                    { label: 'Active Users', value: stats.activeUsers },
+                    { label: 'Pending Tasks', value: stats.pendingTasks },
+                    { label: 'Completed Tasks', value: stats.completedTasks }].map((item, index) => (
+                    <motion.div
+                        key={index}
+                        whileHover={{ scale: 1.05 }}
+                        className="bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-xl shadow-xl p-6 border border-purple-500/10 text-center"
+                    >
+                        <h3 className="text-lg font-semibold text-purple-300 mb-1">{item.label}</h3>
+                        <p className="text-4xl font-bold text-white">{item.value}</p>
+                    </motion.div>
                 ))}
             </section>
 
+            {/* Features */}
+            <motion.section
+                initial="hidden"
+                animate="show"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20"
+            >
+                {features.map((feature, index) => (
+                    <motion.div
+                        key={index}
+                        whileHover={{ scale: 1.02 }}
+                        className="bg-gray-900 rounded-lg overflow-hidden shadow-xl transition-transform border border-gray-800"
+                    >
+                        <img src={feature.image} alt={feature.title} className="h-40 w-full object-cover" />
+                        <div className="p-5">
+                            <h3 className="text-lg font-bold text-purple-200 mb-2">{feature.title}</h3>
+                            <p className="text-gray-400 text-sm">{feature.description}</p>
+                        </div>
+                    </motion.div>
+                ))}
+            </motion.section>
+
             {/* Recent Activity */}
-            <section className="bg-white rounded-lg shadow-md p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Recent Activity</h2>
+            <motion.section
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-gray-900 rounded-xl shadow-md p-6 border border-gray-800"
+            >
+                <h2 className="text-2xl font-bold text-white mb-6">Recent Activity</h2>
                 <div className="space-y-4">
-                    <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                        <div className="h-3 w-3 rounded-full bg-blue-500"></div>
+                    <div className="flex items-center space-x-4 p-4 bg-gray-800 rounded-lg">
+                        <span className="h-3 w-3 rounded-full bg-blue-500"></span>
                         <div>
-                            <p className="text-gray-900">New project "Website Redesign" created</p>
+                            <p className="text-gray-200">New project "Website Redesign" created</p>
                             <p className="text-sm text-gray-500">2 hours ago</p>
                         </div>
                     </div>
-                    <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                        <div className="h-3 w-3 rounded-full bg-green-500"></div>
+                    <div className="flex items-center space-x-4 p-4 bg-gray-800 rounded-lg">
+                        <span className="h-3 w-3 rounded-full bg-green-500"></span>
                         <div>
-                            <p className="text-gray-900">Task "Database Migration" completed</p>
+                            <p className="text-gray-200">Task "Database Migration" completed</p>
                             <p className="text-sm text-gray-500">5 hours ago</p>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </motion.section>
+        </motion.div>
     );
 }
 

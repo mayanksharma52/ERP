@@ -1,6 +1,8 @@
-import { useState } from 'react';
+// src/components/auth/Login.jsx
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import { motion } from 'framer-motion';
 import { authApi } from '../../services/api';
 
 function Login() {
@@ -13,11 +15,12 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-
         try {
             const response = await authApi.login({ email, password, role });
             toast.success('Login successful!');
-            navigate('/');
+            if (role === 'hr') navigate('/hr');
+            if(role==='employee') navigate('/emoployee');
+            else navigate('/dashboard');
         } catch (error) {
             toast.error(error.response?.data?.msg || 'Login failed');
         } finally {
@@ -26,108 +29,82 @@ function Login() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-            <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                    Sign in to your account
-                </h2>
-            </div>
+        <div className="relative min-h-screen bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] flex items-center justify-center overflow-hidden">
+            {/* Glowing Circles Background */}
+            <div className="absolute -top-20 -left-20 w-[300px] h-[300px] bg-pink-500 opacity-30 rounded-full blur-3xl animate-pulse" />
+            <div className="absolute bottom-[-120px] right-[-120px] w-[300px] h-[300px] bg-blue-500 opacity-30 rounded-full blur-3xl animate-pulse" />
 
-            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                    <form className="space-y-6" onSubmit={handleSubmit}>
-                        <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                Email address
-                            </label>
-                            <div className="mt-1">
-                                <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    required
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                />
-                            </div>
-                        </div>
+            {/* Login Card */}
+            <motion.div
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.7 }}
+                className="relative z-10 bg-white/10 backdrop-blur-md rounded-xl shadow-xl p-8 w-full max-w-md"
+            >
+                <h2 className="text-3xl font-extrabold text-white text-center mb-6">Welcome to <span className="text-blue-400">StratoWorks</span></h2>
 
-                        <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                                Password
-                            </label>
-                            <div className="mt-1">
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    required
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label htmlFor="role" className="block text-sm font-medium text-gray-700">
-                                Role
-                            </label>
-                            <select
-                                id="role"
-                                value={role}
-                                onChange={(e) => setRole(e.target.value)}
-                                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md"
-                            >
-                                <option value="employee">Employee</option>
-                                <option value="hr">HR</option>
-                                <option value="manager">Manager</option>
-                                <option value="admin">Admin</option>
-                            </select>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                            <div className="text-sm">
-                                <Link to="/forgot-password" className="font-medium text-blue-600 hover:text-blue-500">
-                                    Forgot password?
-                                </Link>
-                            </div>
-                        </div>
-
-                        <div>
-                            <button
-                                type="submit"
-                                disabled={isLoading}
-                                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
-                            >
-                                {isLoading ? 'Signing in...' : 'Sign in'}
-                            </button>
-                        </div>
-                    </form>
-
-                    <div className="mt-6">
-                        <div className="relative">
-                            <div className="absolute inset-0 flex items-center">
-                                <div className="w-full border-t border-gray-300" />
-                            </div>
-                            <div className="relative flex justify-center text-sm">
-                                <span className="px-2 bg-white text-gray-500">Don't have an account?</span>
-                            </div>
-                        </div>
-
-                        <div className="mt-6">
-                            <Link
-                                to="/signup"
-                                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-blue-600 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                            >
-                                Create new account
-                            </Link>
-                        </div>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-white">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            className="mt-1 w-full px-4 py-2 rounded-md bg-white/20 text-white placeholder-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            placeholder="your@email.com"
+                        />
                     </div>
+
+                    <div>
+                        <label htmlFor="password" className="block text-sm font-medium text-white">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            className="mt-1 w-full px-4 py-2 rounded-md bg-white/20 text-white placeholder-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            placeholder="••••••••"
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="role" className="block text-sm font-medium text-white">Role</label>
+                        <select
+                            id="role"
+                            value={role}
+                            onChange={(e) => setRole(e.target.value)}
+                            className="mt-1 w-full px-4 py-2 rounded-md bg-white/20 text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        >
+                            <option value="employee">Employee</option>
+                            <option value="hr">HR</option>
+                            <option value="manager">Manager</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+
+                    <div className="flex justify-between text-sm text-blue-200">
+                        <Link to="/forgot-password" className="hover:underline">Forgot password?</Link>
+                    </div>
+
+                    <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300 disabled:opacity-60"
+                    >
+                        {isLoading ? 'Signing in...' : 'Sign In'}
+                    </button>
+                </form>
+
+                <div className="mt-6 text-center text-sm text-white">
+                    Don’t have an account?{' '}
+                    <Link to="/signup" className="text-blue-300 hover:underline">
+                        Sign up here
+                    </Link>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 }
