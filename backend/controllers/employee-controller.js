@@ -1,4 +1,20 @@
 const {User,Attendance,Leave,Payroll,Project,Task}=require('../models/Allmodels');
+
+//edit profile
+// exports.editProfile=async(req,res)=>{
+//     try{
+//         const profile=req.body;
+//         const userId=req.user.id;
+//         const user=await User.findById(userId);
+//         if(!user){
+//             return res.status(404).json({success:false,message:"User not found"});
+//         }
+//         profile.name=user.name;
+//         user.email=profile.email;
+//         user.phone=profile.phone;
+//         user.address=profile.address;
+//     }
+// }
 // controllers/employeeController.js
 
 exports.markAttendance = async (req, res) => {
