@@ -1,8 +1,13 @@
-Employee Management System (Full Stack)
+# 🏢 ERP System – Enterprise Resource Planning
 
-This project is a Full-Stack Employee Management System developed using Node.js, Express, MongoDB, and React.js. It features authentication, role-based dashboards (HR and Employee), attendance management, leave tracking, payroll, and project/task management.
+A full-stack ERP system that enables human resource management, attendance tracking, payroll viewing, leave management, project and task assignments, and employee authentication — all in one place.
 
-⸻
+## 🧩 Tech Stack
+
+- **Frontend**: React.js, Tailwind CSS, React Router, React Hot Toast
+- **Backend**: Node.js, Express.js, MongoDB, Mongoose
+- **Authentication**: JSON Web Tokens (JWT), Role-based access
+- **Mail Service**: NodeMailer (for OTP verification)
 
 ✨ Features
 
